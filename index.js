@@ -59,12 +59,44 @@ app.get("/",(req,res)=>{
 });
 
 app.get("/login",(req,res)=>{
-    res.send("login");
+    res.send(`
+    <form action="/loggingin" method="POST">
+    <input type="email" name="email" placeholder="email">
+    <input type="password" name="password" placeholder="password">
+    <button type="submit">Login</button>
+    </form>`);
 }
 );
 
-app.post("/loggingin",(req,res)=>{
-    res.send("loggingin");
+app.post("/loggingin",async (req,res)=>{
+    var email = req.body.email;
+    var password = req.body.password;
+    
+    const schema = Joi.string().email().required();
+    const validation = schema.validate(email);
+    if (validation.error != null) {
+        console.log(validation.error);
+        res.redirect('/login');
+        return;
+    }
+    const result = await userCollection.find({email: email}).project({email: 1, password: 1, username: 1, _id: 1}).toArray();
+    console.log(result);
+    if (result.length == 0) {
+        console.log("email not found");
+        res.redirect('/login');
+        return;
+    }
+    if (await bcrypt.compareSync(password, result[0].password)) {
+        console.log("password match");
+        req.session.authenticated = true;
+        req.session.email = email;
+        req.session.username = result[0].username;
+        req.session.cookie.maxAge = expireTime;
+        res.redirect('/');
+    } else {
+        console.log("password mismatch");
+        res.redirect('/login');
+    }
 });
 
 app.get("/signup",(req,res)=>{
