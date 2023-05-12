@@ -160,15 +160,8 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get("/createprofile", sessionAuth, (req, res) => {
-  res.render("createprofile", {
-    username: req.session.username,
-    email: req.session.email,
-  });
-});
-
-app.post("/createprofile", sessionAuth, (req, res) => {
-  res.render("createprofile", {
+app.post("/createProfile", sessionAuth, (req, res) => {
+  res.render("createProfile", {
     username: req.session.username,
     email: req.session.email,
   });
