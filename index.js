@@ -155,6 +155,13 @@ app.post("/signingup", async (req, res) => {
   }
 });
 
+app.get("/createprofile", sessionAuth, (req, res) => {
+  res.render("createprofile", {
+    username: req.session.username,
+    email: req.session.email,
+  });
+});
+
 app.post("/createprofile", sessionAuth, (req, res) => {
   res.render("createprofile", {
     username: req.session.username,
