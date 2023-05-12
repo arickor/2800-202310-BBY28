@@ -151,21 +151,19 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get("/createprofile", sessionAuth, (req, res) => {
-  res.render("createprofile", {
-    username: req.session.username,
-    email: req.session.email,
-  });
-});
-
-app.post("/createprofile", sessionAuth, (req, res) => {
-  res.render("createprofile", {
+app.post("/createProfile", sessionAuth, (req, res) => {
+  res.render("createProfile", {
     username: req.session.username,
     email: req.session.email,
   });
 });
 
 app.post("/saveProfile", sessionAuth, async (req, res) => {
+  var newPassword = req.body.password;
+  if (newPassword) {
+    var encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
+    await userCollection.updateOne({username: req.session.username}, {$set: {password: encryptedPassword}});
+  }
   await userCollection.updateOne(
     { username: req.session.username },
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
