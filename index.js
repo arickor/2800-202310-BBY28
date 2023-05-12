@@ -168,6 +168,11 @@ app.post("/createProfile", sessionAuth, (req, res) => {
 });
 
 app.post("/saveProfile", sessionAuth, async (req, res) => {
+  var newPassword = req.body.password;
+  if (newPassword) {
+    var encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
+    await userCollection.updateOne({username: req.session.username}, {$set: {password: encryptedPassword}});
+  }
   await userCollection.updateOne(
     { username: req.session.username },
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
