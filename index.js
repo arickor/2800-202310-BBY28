@@ -8,6 +8,8 @@ const url = require("url");
 
 const app = express();
 
+const path = require('path');
+
 const Joi = require("joi");
 const { database } = require("./dbconnection");
 
@@ -62,13 +64,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/login", (req, res) => {
-  res.send(`
-    <form action="/loggingin" method="POST">
-    <input type="email" name="email" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <button type="submit">Login</button>
-    </form>`);
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 app.post("/loggingin", async (req, res) => {
@@ -105,14 +102,8 @@ app.post("/loggingin", async (req, res) => {
   }
 });
 
-app.get("/signup", (req, res) => {
-  res.send(`
-    <form action="/signingup" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="email" name="email" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <button type="submit">signup</button>
-    </form>`);
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, 'signup.html'));
 });
 
 app.post("/signingup", async (req, res) => {
