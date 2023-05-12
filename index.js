@@ -155,6 +155,11 @@ app.post("/signingup", async (req, res) => {
   }
 });
 
+app.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
+});
+
 app.get("/createprofile", sessionAuth, (req, res) => {
   res.render("createprofile", {
     username: req.session.username,
@@ -169,10 +174,16 @@ app.post("/createprofile", sessionAuth, (req, res) => {
   });
 });
 
-app.post("/saveProfile", sessionAuth, (req, res) => {
+app.post("/saveProfile", sessionAuth, async (req, res) => {
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
+  );
+  req.session.primaryGamingPlatform = req.body.primaryGamingPlatform;
   res.render("saveProfile", {
     username: req.session.username,
     email: req.session.email,
+    primaryGamingPlatform: req.session.primaryGamingPlatform
   });
 });
 

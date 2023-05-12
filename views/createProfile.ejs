@@ -1,37 +1,37 @@
 <%- include("templates/header") %>
 <div class="container">
-  <div class="form-floating mb-3">
-    <input
-      type="text"
-      class="form-control"
-      id="floatingInput"
-      placeholder="Username"
-      value="<%= username %>"
-      readonly
-    />
-    <label for="floatingInput">Username</label>
-  </div>
-  <div class="form-floating mb-3">
-    <input
-      type="email"
-      class="form-control"
-      id="floatingInput"
-      placeholder="name@example.com"
-      value="<%= email %>"
-      readonly
-    />
-    <label for="floatingInput">Email</label>
-  </div>
-  <div class="form-floating mb-3">
-    <input
-      type="text"
-      class="form-control"
-      id="floatingPassword"
-      placeholder="Primary gaming platform"
-    />
-    <label for="floatingInput">Primary gaming platform</label>
-  </div>
   <form action="/saveProfile" method="POST">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        name="username"
+        value="<%= username %>"
+        readonly
+      />
+      <label for="floatingInput">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="floatingInput"
+        value="<%= email %>"
+        readonly
+      />
+      <label for="floatingInput">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Primary gaming platform"
+        name="primaryGamingPlatform"
+      />
+      <label for="floatingInput">Primary gaming platform</label>
+    </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
   </form>
 </div>
