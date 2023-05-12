@@ -65,7 +65,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'login.html'));
+  res.render('login');
 });
 
 app.post("/loggingin", async (req, res) => {
@@ -103,7 +103,7 @@ app.post("/loggingin", async (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, 'signup.html'));
+  res.render('signup');
 });
 
 app.post("/signingup", async (req, res) => {
@@ -141,7 +141,7 @@ app.post("/signingup", async (req, res) => {
       req.session.email = email;
       req.session.username = username;
       req.session.cookie.maxAge = expireTime;
-      res.redirect("/createprofile");
+      res.redirect("/");
     }
   }
 });
