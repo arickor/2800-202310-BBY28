@@ -1,0 +1,29 @@
+<%- include("templates/header") %>
+<div class="container">
+  <h3>Hello <%= username %>,</h3>
+  <br/ >
+  <button
+    onclick="location.href='/createProfile'"
+    class="w-100 btn btn-lg btn-primary"
+    type="submit"
+  >
+    Edit Profile
+  </button>
+  <br/ > <br/ >
+  <!-- <button
+    onclick="location.href='/saveProfile'"
+    class="w-100 btn btn-lg btn-primary"
+    type="submit"
+  >
+    View Profile
+  </button>
+  <br/ > <br/ > -->
+  <button
+    onclick="location.href='/logout'"
+    class="w-100 btn btn-lg btn-primary"
+    type="submit"
+  >
+    Log Out
+  </button>
+</div>
+<%- include("templates/footer") %>
