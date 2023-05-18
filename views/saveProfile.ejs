@@ -31,9 +31,14 @@
       />
       <label for="floatingInput">Primary Gaming Platform</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">
+    <button class="w-100 btn btn-lg btn-primary" onclick="goProfile()" type="button">
       Edit Profile
     </button>
   </form>
 </div>
+<script>
+  function goProfile() {
+    window.location.href = "/createProfile";
+  }
+  </script>
 <%- include("templates/footer") %>

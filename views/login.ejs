@@ -1,12 +1,121 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="mt-5">Login</h1>
+
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #1A1A1A;
+    }
+
+    .container {
+      max-width: 360px;
+      margin: 0 auto;
+      padding-top: 20px;
+      position: relative;
+    }
+
+    .login-block {
+      background-color: #9F9D9D;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #000000;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #000000;
+      color: #000000;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: #007bff;
+      color: #1A1A1A;
+      cursor: pointer;
+    }
+
+    p {
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
+      color: #000000;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .logo-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .logo-button {
+      display: inline-block;
+      margin-top: 17%;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .logo-image {
+      width: 90px; /* Adjust the width as needed */
+      animation: spin 5s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .spin-animation {
+      animation-play-state: running !important;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <button class="logo-button" onclick="logoButtonClick()">
+        <img src="controller.png" alt="Logo" class="logo-image">
+      </button>
+    </div>
+    <div class="login-block">
+      <h1>Login</h1>
       <form method="POST" action="/loggingin" class="mt-4">
         <div class="form-group">
           <label for="username">Email:</label>
@@ -20,8 +129,13 @@
       </form>
       <p class="mt-3">Don't have an account? <a href="/signup">Sign up here</a>.</p>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+  <script>
+    function logoButtonClick() {
+      var logoImage = document.querySelector('.logo-image');
+      logoImage.classList.toggle('spin-animation');
+    }
+  </script>
+</body>
+
 </html>
