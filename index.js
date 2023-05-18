@@ -1,10 +1,12 @@
 // Dependencies
+const fs = require("fs");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const MongoStore = require("connect-mongo");
 require("dotenv").config();
 const url = require("url");
+const Papa = require("papaparse");
 
 const app = express();
 
@@ -27,6 +29,7 @@ const port = process.env.PORT || 8000;
 const node_session_secret = process.env.NODE_SESSION_SECRET; // put your secret here
 
 const userCollection = database.db(mongodb_database).collection("users");
+const gameCollection = database.db(mongodb_database).collection("games");
 
 const expireTime = 60 * 60 * 1000; // 1 hour in milliseconds
 const saltRounds = 10;
@@ -174,6 +177,32 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
     email: req.session.email,
     primaryGamingPlatform: req.session.primaryGamingPlatform
   });
+});
+
+app.get("/processcsv", async (req, res) => {
+  
+  Papa.parse(fs.createReadStream('games_of_all_time.csv'), {
+    header: true,
+    step: async function(results, parser) {
+        console.log("Row data:", results.data);
+        await gameCollection.insertOne({game_name: results.data.game_name,
+            meta_score: results.data.meta_score,
+            user_score: results.data.user_score,
+            platform: results.data.platform,
+            description: results.data.description,
+            url: results.data.url,
+            developer: results.data.developer,
+            genre: results.data.genre,
+            type: results.data.type,
+            rating: results.data.rating
+        });
+    },
+    complete: function(results) {
+        console.log("done parsing");
+    }
+  }
+  );
+  res.send("done");
 });
 
 app.use(express.static(__dirname + "/public"));
