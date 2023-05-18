@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game Wishlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+      body {
+        background-color: #1A1A1A;
+      }
+
+      .container {
+        max-width: 360px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+
+      .wishlist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .wishlist-title {
+        font-size: 25px;
+        font-weight: bold;
+        color: #9F9D9D;
+        /* align-items: center; */
+        text-align: center;
+      }
+
+      .profile-button {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .profile-button img {
+        width: 50px;
+        height: 50px; 
+      }
+
+      .home-button {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .home-button img {
+        width: 40px;
+        height: 40px; 
+      }
+
+      .wishlist-card {
+        background-color: #9F9D9D;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+      }
+
+      .wishlist-card img {
+        width: 1in;
+        height: 1in;
+        border-radius: 5px;
+      }
+
+      .wishlist-card-content {
+        flex-grow: 1;
+        margin-left: 10px;
+      }
+
+      .wishlist-card h4 {
+        margin-top: 0;
+        font-size: 16px;
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .wishlist-card p {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="wishlist-header">
+            <button class="wishlist-button home-button" onclick="goHome()"><img src="home.jpg" alt="Home"></button>
+            <h1 class="wishlist-title">Wishlist</h1>
+            <button class="wishlist-button profile-button" onclick="goProfile()"><img src="profile.jpg" alt="Profile"></button>
+          </div>          
+      <div class="wishlist-card">
+        <img src="game1.jpg" alt="Game 1">
+        <div class="wishlist-card-content">
+          <h4>Overwatch 2</h4>
+          <p>Platform: PC</p>
+          <p>Release Date: November 2022</p>
+          <p>Genre: First-Person Shooter</p>
+        </div>
+      </div>
+      <div class="wishlist-card">
+        <img src="game2.jpg" alt="Game 2">
+        <div class="wishlist-card-content">
+          <h4>Minecraft</h4>
+          <p>Platform: Xbox One</p>
+          <p>Release Date: May 2009</p>
+          <p>Genre: Sandbox, Survival</p>
+        </div>
+      </div>
+      <div class="wishlist-card">
+        <img src="game3.jpg" alt="Game 3">
+        <div class="wishlist-card-content">
+          <h4>GTA V</h4>
+          <p>Platform: PlayStation 4</p>
+          <p>Release Date: September 2013</p>
+          <p>Genre: Action-Adventure</p>
+        </div>
+      </div>
+    </div>
+    <script>
+        function goProfile() {
+          window.location.href = "/createProfile";
+        }
+        </script>
+    <script src="../index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+<%- include("templates/footer") %>
