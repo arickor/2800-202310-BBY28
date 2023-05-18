@@ -13,7 +13,8 @@
     .container {
       max-width: 360px;
       margin: 0 auto;
-      padding-top: 100px;
+      padding-top: 20px;
+      position: relative;
     }
 
     .login-block {
@@ -71,11 +72,48 @@
       color: #007bff;
       text-decoration: none;
     }
+
+    .logo-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .logo-button {
+      display: inline-block;
+      margin-top: 17%;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .logo-image {
+      width: 90px; /* Adjust the width as needed */
+      animation: spin 5s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .spin-animation {
+      animation-play-state: running !important;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
+    <div class="logo-container">
+      <button class="logo-button" onclick="logoButtonClick()">
+        <img src="controller.png" alt="Logo" class="logo-image">
+      </button>
+    </div>
     <div class="login-block">
       <h1>Login</h1>
       <form method="POST" action="/loggingin" class="mt-4">
@@ -92,9 +130,12 @@
       <p class="mt-3">Don't have an account? <a href="/signup">Sign up here</a>.</p>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    function logoButtonClick() {
+      var logoImage = document.querySelector('.logo-image');
+      logoImage.classList.toggle('spin-animation');
+    }
+  </script>
 </body>
 
 </html>
