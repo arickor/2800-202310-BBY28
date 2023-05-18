@@ -64,6 +64,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get('/wishlist', (req, res) => {
+  res.render('wishlist');
+});
+
 app.get('/login', (req, res) => {
   res.render('login');
 });
@@ -151,12 +155,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.post("/createProfile", sessionAuth, (req, res) => {
-  res.render("createProfile", {
-    username: req.session.username,
-    email: req.session.email,
-  });
-});
 
 app.post("/saveProfile", sessionAuth, async (req, res) => {
   var newPassword = req.body.password;
@@ -175,6 +173,14 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
     primaryGamingPlatform: req.session.primaryGamingPlatform
   });
 });
+
+app.get("/createProfile", sessionAuth, (req, res) => {
+  res.render("createProfile", {
+    username: req.session.username,
+    email: req.session.email,
+  });
+});
+
 
 app.use(express.static(__dirname + "/public"));
 
