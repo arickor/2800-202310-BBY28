@@ -85,6 +85,11 @@
         height: 80px;
         margin-top: 63%;
       }
+      .btn {
+        background: none;
+        border: none;
+        margin-left: 25%;
+      }
     </style>
   </head>
   <body>
@@ -93,9 +98,6 @@
         <ul>
           <li>
             <a href="/"><img src="home.png" alt="Home" id="home-icon" /></a>
-          </li>
-          <li>
-            <a href="/saveProfile"><img src="save.png" alt="Save" id="save-icon" /></a>
           </li>
         </ul>
       </nav>
@@ -135,15 +137,6 @@
           <option value="Switch">Nintendo Switch</option>
           <option value="Mobile">Mobile</option>
         </select>
-        <!-- <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="floatingPassword"
-            placeholder="Primary gaming platform"
-            name="primaryGamingPlatform"
-          />
-        </div> -->
         <label for="floatingPassword">Enter a new password</label>
         <div class="form-floating mb-3">
           <input
@@ -153,7 +146,11 @@
             placeholder="Password"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Save Profile</button>
+        <button type="submit" class="btn btn-primary">
+          <a href="/saveProfile">
+            <img src="save.png" alt="Save" id="save-icon" />
+          </a>
+        </button>
       </form>
     </div>
   </body>
