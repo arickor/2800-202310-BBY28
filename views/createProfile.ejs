@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Create Profile</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+      }
+      label {
+        color: #ffffff;
+        display: block;
+        margin-bottom: 5px;
+        font-size: larger;
+        text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+      }
+      .container {
+        align-items: center;
+        background-color: #808080;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding-top: 5%;
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-bottom: 5%;
+        border-radius: 20px;
+      }
+      .form-select {
+        background-color: #9f9d9d;
+        padding: 10px;
+        padding-top: 10%;
+        padding-bottom: 10%;
+        margin: 5px 0;
+        border-radius: 20px;
+        width: 100%;
+        font-size: large;
+        text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+        text-align: center;
+      }
+      .form-select,
+      option {
+        color: #ffffff;
+        /* text-align: center; */
+        font-size: large;
+        text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+      }
+      .form-control {
+        background-color: #9f9d9d;
+        padding-top: 10%;
+        padding-bottom: 10%;
+        margin-bottom: 5%;
+        border-radius: 20px;
+        border: none;
+      }
+      .form-control,
+      input {
+        color: #ffffff;
+        text-align: center;
+        font-size: large;
+        text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+      }
+      img {
+        width: 100px;
+        height: 100px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex; /* Add this line to display the list items as flex items */
+        margin-top: 10%;
+      }
+
+      nav ul li {
+        display: inline-block; /* Add this line to display the list items as inline-block elements */
+        margin-right: 10px; /* Add this line to add some spacing between the list items */
+      }
+      header nav ul li a img {
+        margin-left: -10%;
+        margin-top: 40%;
+        margin-bottom: -5%;
+      }
+      #home-icon {
+        width: 80px;
+        height: 80px;
+        margin-top: 63%;
+      }
+      .btn {
+        background: none;
+        border: none;
+        margin-left: 25%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/"><img src="home.png" alt="Home" id="home-icon" /></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <form action="/saveProfile" method="POST">
+        <label for="floatingInput">Username</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            value="<%= username %>"
+            readonly
+          />
+        </div>
+        <label for="floatingInput">Email</label>
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            value="<%= email %>"
+            readonly
+          />
+        </div>
+        <label for="floatingInput">Primary gaming platform</label>
+        <select
+          id="primary-platform"
+          name="primaryGamingPlatform"
+          class="form-select mb-3"
+        >
+          <option value="PC">PC</option>
+          <option value="Xbox">Xbox</option>
+          <option value="PlayStation">PlayStation</option>
+          <option value="Switch">Nintendo Switch</option>
+          <option value="Mobile">Mobile</option>
+        </select>
+        <label for="floatingPassword">Enter a new password</label>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <a href="/saveProfile">
+            <img src="save.png" alt="Save" id="save-icon" />
+          </a>
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
