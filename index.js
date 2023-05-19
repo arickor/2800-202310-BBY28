@@ -58,7 +58,7 @@ function sessionAuth(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-  res.render("index", {
+  res.render("homepage", {
     username: req.session.username,
     email: req.session.email,
   });
@@ -66,6 +66,10 @@ app.get("/", (req, res) => {
 
 app.get('/wishlist', (req, res) => {
   res.render('wishlist');
+});
+
+app.get('/homepage', (req, res) => {
+  res.render('homepage');
 });
 
 app.get('/login', (req, res) => {

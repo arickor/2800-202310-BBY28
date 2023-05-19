@@ -1,4 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>gAImer</title>
+   
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css" /> -->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
 
 body {
   background-color: #1a1a1a;
@@ -38,7 +46,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/star.png);
+  background-image: url("star.png");
   background-size: 290px;
   background-position: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -57,7 +65,7 @@ body {
   width: 250px;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/user.png);
+  background-image: url(user.png);
   background-size: 250px;
   background-position: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -94,7 +102,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/xbtn2.png);
+  background-image: url(xbtn2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -119,7 +127,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/filter2.png);
+  background-image: url(filter2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -143,7 +151,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/check2.png);
+  background-image: url(check2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -185,6 +193,7 @@ cursor: pointer;
 }
 
 .popup {
+    display:none;
   display: grid;
   grid-template-columns: 101px 422.7px 409.3px 333px 234px;
   grid-template-rows: 275px 200px 200px 200px 200px 200px 200px 252px 75px;
@@ -203,6 +212,7 @@ cursor: pointer;
     ". clear clear save ."
     ". . . . .";
 }
+
 
 .gap {
   grid-area: gap;
@@ -365,3 +375,131 @@ cursor: pointer;
   border-radius: 45px;
   color: aliceblue;
 }
+
+    </style>
+
+
+  </head>
+  <body>
+    <div class="container">
+        <div class="str">
+            <a href="/wishlist">
+              <button type="button"></button>
+            </a>
+          </div>
+
+      <div class="user">
+        <a href="/createProfile">
+            <button type="button"></button>
+          </a>
+          <!-- <img src="/homePage/public/user.png" > -->
+      </div>
+
+      <div class="img">
+        <!-- <p style="color: #ffffff"> </p> <B>Overwatch 2</B><BR>
+          2022<br>
+          FPS/Action/Team<br>
+          JPC/Xbox/PS/Switch</p> -->
+        <img src="ow2.jpg" id="ow2" />
+      </div>
+
+      <div class="xBTN">
+        <button type="button">
+          <!-- <img src="/homePage/public/xbtn2.png" > -->
+        </button>
+      </div>
+
+      <div class="Filter">
+        <button type="button" onclick="togglePopup()"></button>
+      </div>
+
+      <div class="Check">
+        <button type="button">
+          <!-- <img src="/homePage/public/check2.png" > -->
+        </button>
+      </div>
+      
+      <div class="popup" id="popup">
+  
+          <!-- Add your filter options or content here -->
+        
+            <div class="gap"></div>
+
+            <div class="x">
+              <img  class="close-button" onclick="togglePopup()" src="xbtn2.png" ></img>
+            </div>
+
+            <div class="rDate">
+              <h1>Release Date: </h1>
+            </div>
+            <div class="Min">
+              <input id="mi" type="year" color="white" placeholder="Min"></input>
+            </div>
+
+            <div class="max">
+              <input id="mx" type="year" placeholder="Max"></input>
+            </input></div>
+
+            <div class="genre">
+              <h1>Genre: </h1>
+            </div>
+
+            <div class="select">
+              <select id="genreDropdown1">
+                <option value="action">Action</option>
+                <option value="adventure">Adventure</option>
+                <option value="rpg">Role-playing</option>
+                <option value="strategy">Strategy</option>
+                <option value="sports">Sports</option>
+                <option value="puzzle">Puzzle</option>
+            </select>
+            </div>
+
+            <div class="platform">
+              <h1>Platform: </h1>
+            </div>
+            
+            <div class="select2">
+              <select id="genreDropdown2">
+                <option value="Xbox">Xbox</option>
+                <option value="Playstation">Playstation</option>
+                <option value="PC">PC</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Switch">Switch</option>
+                <option value="DS">DS</option>
+            </select>
+            </div>
+
+            <div class="clear">
+              <button class="btn1" type="button">Clear</button>
+            </div>
+
+            <div class="save">
+              <button class="btn2" type="button">Save</button>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+        //  function goProfile() {
+        //   window.location.href = "/wishlist";
+        // }
+
+    //   function togglePopup() {
+    //     var popup = document.getElementById("popup");
+    //     popup.classList.toggle("show");
+    //   }
+
+    function togglePopup() {
+    var popup = document.getElementById("popup");
+    popup.classList.toggle("show");
+  }
+    </script>
+  </body>
+</html>
