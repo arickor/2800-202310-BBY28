@@ -1,0 +1,367 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+body {
+  background-color: #1a1a1a;
+}
+
+.container {
+  display: grid;
+
+  grid-template-columns: 50px 300px 300px 300px 300px 300px 50px;
+  grid-template-rows: 100px 300px 300px 300px 300px 300px 300px 390px 450px 300px 225px;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . . . . . ."
+    ". str . . . user ."
+    ". img img img img img ."
+    ". img img img img img ."
+    ". img img img img img ."
+    ". img img img img img ."
+    ". img img img img img ."
+    ". img img img img img ."
+    ". . . . . . ."
+    ". . xBTN FIlter Check . ."
+    ". . . . . . .";
+}
+
+/* wishlist button */
+.str {
+  grid-area: str;
+  background-color: #1a1a1a;
+}
+.str button {
+  width: 250px;
+  height: 250px;
+  border-radius: 70%;
+  border: #1a1a1a;
+
+  background-color: #1a1a1a;
+  background-image: url(star.png);
+  background-size: 290px;
+  background-position: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* user profile btn */
+.user {
+  grid-area: user;
+}
+
+.user button {
+  background-color: #1a1a1a;
+  border-radius: 70%;
+  border: #1a1a1a;
+  height: 250px;
+  width: 250px;
+
+  background-color: #1a1a1a;
+  background-image: url(/homePage/public/user.png);
+  background-size: 250px;
+  background-position: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Ow image  */
+.img {
+  grid-area: img;
+}
+.img img {
+  border-radius: 4%;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* .img { grid-area: img; 
+        background-image: url(/homePage/public/ow2.jpg);
+        width: 96%;
+        height: 130%;
+        background-size: auto;
+    ;
+        color: white;} */
+
+/* x button */
+.xBTN {
+  grid-area: xBTN;
+  display: block;
+  margin: 0 auto;
+}
+.xBTN button {
+  width: 310px;
+  width: 240px;
+  height: 240px;
+  border-radius: 70%;
+  border: #1a1a1a;
+
+  background-color: #1a1a1a;
+  background-image: url(/homePage/public/xbtn2.png);
+  background-size: 330px;
+  background-position: center;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+}
+/* .xBTN button img{
+                width: 330px;
+                height: auto;
+               } */
+
+/* filter button */
+.Filter {
+  grid-area: FIlter;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.Filter button {
+  width: 210px;
+  height: 210px;
+  border-radius: 70%;
+  border: #1a1a1a;
+
+  background-color: #1a1a1a;
+  background-image: url(/homePage/public/filter2.png);
+  background-size: 330px;
+  background-position: center;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* .FIlter button img{
+          width: 275px;
+          height: auto;
+         } */
+
+/* check mark button */
+.Check {
+  grid-area: Check;
+  display: block;
+  margin: 0 auto;
+}
+.Check button {
+  width: 240px;
+  height: 240px;
+  border-radius: 70%;
+  border: #1a1a1a;
+
+  background-color: #1a1a1a;
+  background-image: url(/homePage/public/check2.png);
+  background-size: 330px;
+  background-position: center;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* .Check button img{
+          width: 330px;
+          height: auto;
+         }
+   */
+
+   .popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2000px;
+    background-color: rgb(64,56,56);
+    overflow: hidden;
+    transition: height .8s ease;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+
+  }
+  .popup-content {
+    padding: 20px;
+  }
+
+  .show {
+    height: 0px; /* Adjust the height as desired */
+  }
+
+
+.close-button {
+position: absolute;
+top: 10px;
+right: 10px;
+cursor: pointer;
+}
+
+.popup {
+  display: grid;
+  grid-template-columns: 101px 422.7px 409.3px 333px 234px;
+  grid-template-rows: 275px 200px 200px 200px 200px 200px 200px 252px 75px;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: 20px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "gap . . . x"
+    ". rDate rDate rDate ."
+    ". Min . max ."
+    ". genre genre genre ."
+    ". select select . ."
+    ". platform platform platform ."
+    ". select2 select2 . ."
+    ". clear clear save ."
+    ". . . . .";
+}
+
+.gap {
+  grid-area: gap;
+}
+
+.x {
+  grid-area: x;
+}
+
+.rDate {
+  grid-area: rDate;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 40px;
+
+  font-weight: bolder;
+  color: rgb(134, 133, 133);
+
+  /* line */
+  border-top: 7px solid rgb(134, 133, 133);
+  display: block;
+  
+}
+
+.Min {
+  grid-area: Min;
+  font-family: "Nanum Gothic", sans-serif;
+  color: rgb(134, 133, 133);
+  
+}
+#mi{
+  font-size: 75px;
+  height: 150px;
+  width: 500px;
+
+  color:aliceblue;
+  background-color: #2a2a2a;
+  border-radius: 60px;
+  border:none;
+  overflow: auto;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+
+}
+::placeholder{
+  color:aliceblue;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.max {
+  grid-area: max;
+  font-family: "Nanum Gothic", sans-serif;
+}
+#mx{
+  font-size: 75px;
+  height: 150px;
+  width: 500px;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+
+  color:aliceblue;
+  background-color: #2a2a2a;
+  border-radius: 60px;
+  border:none;
+  overflow: auto;
+
+}
+
+.genre {
+  grid-area: genre;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 40px;
+  font-weight: bolder;
+  color: rgb(134, 133, 133);
+  
+
+  /* line */
+  border-top: 7px solid rgb(134, 133, 133);
+  display: block;
+}
+
+.platform {
+  grid-area: platform;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 40px;
+  font-weight: bolder;
+  color: rgb(134, 133, 133);
+
+  /* line */
+  border-top: 7px solid rgb(134, 133, 133);
+  display: block;
+}
+
+.select {
+  grid-area: select;
+}
+#genreDropdown1{
+  font-size: 75px;
+  height:150px;
+  width: 500px;
+  text-align: center;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+
+  color:aliceblue;
+  background-color: #2a2a2a;
+  border-radius: 65px;
+  border-color: #2a2a2a;
+  overflow: auto;
+}
+
+.select2 {
+  grid-area: select2;
+  font-family: "Nanum Gothic", sans-serif;
+
+}
+#genreDropdown2{
+  font-size: 75px;
+  height:150px;
+  width: 500px;
+  text-align: center;
+  box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+
+  color:aliceblue;
+  background-color: #2a2a2a;
+  border-radius: 65px;
+  border-color: #2a2a2a;
+  overflow: auto;
+}
+
+.clear {
+  grid-area: clear;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 100px;
+  padding-left: 150px;
+  padding-top: 30px;
+  /* line */
+  border-top: 7px solid rgb(134, 133, 133);
+  display: block;
+}
+.btn1{
+  font-size:100px;
+  background-color: rgb(64,56,56);
+  border:none;
+  border-radius: 45px;
+  color: aliceblue;
+}
+
+.save {
+  grid-area: save;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 100px;
+  padding-top: 30px;
+  /* line */
+  border-top: 7px solid rgb(134, 133, 133);
+  display: block;
+  
+}
+.btn2{
+  font-size:100px; 
+  background-color: rgb(64,56,56);
+  border:none;
+  border-radius: 45px;
+  color: aliceblue;
+}
