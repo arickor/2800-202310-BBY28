@@ -1,0 +1,33 @@
+<%- include("templates/header") %>
+<div class="container">
+  <h3>Hello <%= username %>,</h3>
+  <br/ >
+  <form action="/createProfile" method="POST">
+    <button class="w-100 btn btn-lg btn-primary" type="button" onclick="goProfile()">
+      Edit Profile
+    </button>    
+  </form>
+  <br/ >
+  <!-- <button
+    onclick="location.href='/saveProfile'"
+    class="w-100 btn btn-lg btn-primary"
+    type="submit"
+  >
+    View Profile
+  </button>
+  <br/ > <br/ > -->
+  <button
+    onclick="location.href='/logout'"
+    class="w-100 btn btn-lg btn-primary"
+    type="submit"
+  >
+    Log Out
+  </button>
+</div>
+<script>
+  function goProfile() {
+    window.location.href = "/createProfile";
+  }
+  </script>
+  
+<%- include("templates/footer") %>
