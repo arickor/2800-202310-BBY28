@@ -27,8 +27,13 @@
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "joi": "^17.9.2",
+
+    "mongodb": "^5.5.0",
+
     "nodemon": "^2.0.22",
+
     "papaparse": "^5.4.1",
+
     "url": "^0.11.0"
   }
 }
