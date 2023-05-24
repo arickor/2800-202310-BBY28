@@ -96,13 +96,13 @@ body {
 }
 
 .img-overlay {
-  position:relative;
-  
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  color: #fff;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 30px;
+  position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      color: #fff;
 }
 .xBTN {
   grid-area: xBTN;
@@ -415,6 +415,7 @@ cursor: pointer;
   
       <div class="img" id="imageContainer">
         <img src="/ow2.jpg" alt="Overwatch 2" id="mainImage" />
+
         <div class="img-overlay" id="imageOverlay">
           <h3>Overwatch 2</h3>
           <p>Genre: FPS/Action/Team</p>
@@ -502,27 +503,27 @@ cursor: pointer;
       let startX = 0;
       let distX = 0;
   
-      let images = [];
-      // { 
-      //   src: '/ow2.jpg', 
-      //   name: 'Overwatch 2', 
-      //   genre: 'FPS/Action/Team', 
-      //   releaseDate: '2022'
-      // },
-      // {
-      //   src: '/gowr.jpg', 
-      //   name: 'GodOf War Ragnorok', 
-      //   genre: 'Adventure/open world', 
-      //   releaseDate: '2022'
-      // },
-      // {
-      //   src: '/mine.jpg', 
-      //   name: 'Minecraft', 
-      //   genre: 'FPS/Action/Team', 
-      //   releaseDate: '2011'
-      // }
+      let images = [
+      { 
+        src: '/ow2.jpg', 
+        name: 'Overwatch 2', 
+        genre: 'FPS/Action/Team', 
+        releaseDate: '2022'
+      },
+      {
+        src: '/gowr.jpg', 
+        name: 'God Of War Ragnorok', 
+        genre: 'Adventure/open world', 
+        releaseDate: '2022'
+      },
+      {
+        src: '/mine.jpg', 
+        name: 'Minecraft', 
+        genre: 'FPS/Action/Team', 
+        releaseDate: '2011'
+      }
       // Add more image objects as needed
-    // ];
+    ];
   
   
       let currentImageIndex = 0;
@@ -596,20 +597,20 @@ cursor: pointer;
       }
 
 
-  function fetchGameData() {
-    fetch('/games')
-      .then((response) => response.json())
-      .then((data) => {
-        images = data;
-        mainImage.src = images[currentImageIndex].src;
-        updateImageOverlay();
-      })
-      .catch((error) => {
-        console.error('Failed to fetch game data:', error);
-      });
-  }
+  // function fetchGameData() {
+  //   fetch('/games')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       images = data;
+  //       mainImage.src = images[currentImageIndex].src;
+  //       updateImageOverlay();
+  //     })
+  //     .catch((error) => {
+  //       console.error('Failed to fetch game data:', error);
+  //     });
+  // }
 
-  fetchGameData();
+  // fetchGameData();
     </script>
   
   </body>
