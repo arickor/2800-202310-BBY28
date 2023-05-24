@@ -1,15 +1,18 @@
 // Dependencies
+const fs = require("fs");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const MongoStore = require("connect-mongo");
 require("dotenv").config();
 const url = require("url");
+const Papa = require("papaparse");
+var distance = require( 'compute-cosine-distance' );
 
 const app = express();
 
 const path = require('path');
-
+const apicalypse = require("apicalypse").default;
 const Joi = require("joi");
 const { database } = require("./dbconnection");
 
@@ -27,6 +30,8 @@ const port = process.env.PORT || 8000;
 const node_session_secret = process.env.NODE_SESSION_SECRET; // put your secret here
 
 const userCollection = database.db(mongodb_database).collection("users");
+const gameCollection = database.db(mongodb_database).collection("games");
+const gameCollectionBin = database.db(mongodb_database).collection("gamesBin");
 
 const expireTime = 60 * 60 * 1000; // 1 hour in milliseconds
 const saltRounds = 10;
@@ -55,6 +60,33 @@ function sessionAuth(req, res, next) {
   } else {
     res.redirect("/login");
   }
+}
+
+async function knnpredict(k, input){
+  const result = await gameCollectionBin.find({}).project({game_name: 1,genre:1,ratings:1, _id: 0}).toArray();
+  const inputgame = await gameCollectionBin.findOne({game_name: input});
+  if (inputgame == null) {
+    console.log("game not found");
+    return null;
+  }
+  let distances = [];
+  for (let i = 0; i < result.length; i++) {
+    if (result[i].game_name != input) {
+      distances.push([result[i].game_name, distance(inputgame.genre, result[i].genre) + distance(inputgame.ratings, result[i].ratings)]);
+      //console.log(result[i].genre);
+    }
+  }
+  distances.sort(function(a, b) {
+    return a[1]-b[1];
+  }
+  );
+  let neighbors = [];
+  for (let i = 0; i < k; i++) {
+    neighbors.unshift(distances[i][0]);
+  }
+  console.log(neighbors);
+  return neighbors;
+
 }
 
 app.get("/", (req, res) => {
@@ -186,6 +218,99 @@ app.get("/createProfile", sessionAuth, (req, res) => {
   });
 });
 
+app.get("/processcsv", async (req, res) => {
+  
+  Papa.parse(fs.createReadStream('games_of_all_time.csv'), {
+    header: true,
+    step: async function(results, parser) {
+        console.log("Row data:", results.data);
+        await gameCollection.insertOne({game_name: results.data.game_name,
+            meta_score: results.data.meta_score,
+            user_score: results.data.user_score,
+            platform: results.data.platform,
+            description: results.data.description,
+            url: results.data.url,
+            developer: results.data.developer,
+            genre: results.data.genre,
+            type: results.data.type,
+            rating: results.data.rating
+        });
+    },
+    complete: function(results) {
+        console.log("done parsing");
+    }
+  }
+  );
+  res.send("done");
+});
+
+app.get('/loadapi', async (res, req) => {
+  const request = {
+      // Optional: By default, the apicalypse query is put in the request body.
+      // Use 'url' to put the query in the request URL.
+      queryMethod: 'body',
+      method: 'post', // default
+      baseURL: 'https://api.igdb.com/v4', // default
+      headers: { // optional
+          'Accept': '*/*',
+          'Client-ID': 'rl84mqzv9qdjdvbo7yo2lyjtenqo4c',
+          'Authorization': 'Bearer chf9gxhp6p61k26o9n6s5xzbc7pmbc'
+      },
+      responseType: 'json', // default
+  };
+  const response = await apicalypse(request)
+      .where('name = "The Witcher 3: Wild Hunt"')
+      .fields('name, cover.url')
+      .request('/games');
+  console.log(response.data[0].cover.url.substring(2,36));
+  console.log(response.data[0].cover.url.substring(42));
+  let imgurl = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + response.data[0].cover.url.substring(44);
+  req.send(`<img src="${imgurl}">`);
+  const result = await gameCollection.find({imgurl: { $exists: false }}).project({game_name: 1, _id: 0}).toArray();
+  console.log(result);
+  for (let i = 0; i < result.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 250));
+      const response = await apicalypse(request)
+          .search(result[i].game_name)
+          .fields('name, cover.url')
+          .request('/games');
+      if (response.data[0]) {
+          //console.log(response.data[0].cover.url.substring(2,36));
+          console.log(response.data[0].name);
+          if (response.data[0].cover) {
+          let imgurl = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + response.data[0].cover.url.substring(44);
+          await gameCollection.updateOne({game_name: result[i].game_name}, {$set: {imgurl: imgurl}});
+          }
+      }
+      console.log(i);
+  }
+  console.log("done");
+});
+
+app.get("/dbfixing", async (req, res) => {
+  //const result = await gameCollection.find({}).project({game_name: 1,genre:1, _id: 0}).toArray();
+  const result = await gameCollection.find({imgurl:{$exists:true}}).project({game_name: 1,normalized_genre:1,meta_score:1,user_score:1, _id: 0}).toArray();
+  const genrelist = await gameCollection.distinct("normalized_genre");
+  console.log(result);
+  for (let i = 0; i < result.length; i++) {
+    let ratingbin = [];
+    ratingbin.push(result[i].meta_score);
+    ratingbin.push(result[i].user_score);
+    await gameCollectionBin.updateOne({game_name: result[i].game_name}, {$set: {ratings: ratingbin}});
+    console.log(result[i].game_name);
+    console.log(ratingbin);
+    console.log(i);
+  }
+
+  console.log("done");
+  res.send("done");
+});
+
+app.get("/aidemo", async (req, res) => {
+  console.log(knnpredict(50, "The Witcher 3: Wild Hunt"));
+  
+  res.send("done");
+});
 
 app.use(express.static(__dirname + "/public"));
 
