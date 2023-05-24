@@ -182,6 +182,7 @@ app.get("/createProfile", sessionAuth, (req, res) => {
   res.render("createProfile", {
     username: req.session.username,
     email: req.session.email,
+    primaryGamingPlatform: req.session.primaryGamingPlatform
   });
 });
 

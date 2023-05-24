@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Save Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         background-color: #1a1a1a;
+        font-family: "Ubuntu", sans-serif;
       }
       label {
         color: #ffffff;
@@ -85,6 +92,12 @@
         height: 80px;
         margin-top: 63%;
       }
+      #edit-icon {
+        width: 90px;
+        height: 90px;
+        margin-top: 8%;
+        margin-left: 15%;
+      }
       .btn {
         background: none;
         border: none;
@@ -93,8 +106,18 @@
     </style>
   </head>
   <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/"><img src="home.png" alt="Home" id="home-icon" /></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
     <div class="container">
       <form action="/createProfile" method="POST">
+        <label for="floatingInput">Username</label>
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -103,8 +126,8 @@
             value="<%= username %>"
             readonly
           />
-          <label for="floatingInput">Username</label>
         </div>
+        <label for="floatingInput">Email</label>
         <div class="form-floating mb-3">
           <input
             type="email"
@@ -113,8 +136,8 @@
             value="<%= email %>"
             readonly
           />
-          <label for="floatingInput">Email</label>
         </div>
+        <label for="floatingInput">Primary gaming platform</label>
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -123,14 +146,13 @@
             value="<%= primaryGamingPlatform %>"
             readonly
           />
-          <label for="floatingInput">Primary Gaming Platform</label>
         </div>
         <button
           class="w-100 btn btn-lg btn-primary"
           onclick="goProfile()"
           type="button"
         >
-          Edit Profile
+          <img src="edit.png" alt="Edit" id="edit-icon" style="filter: invert(100%);" />
         </button>
       </form>
     </div>
