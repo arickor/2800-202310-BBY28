@@ -512,7 +512,7 @@ cursor: pointer;
       },
       {
         src: '/gowr.jpg', 
-        name: 'God Of War Ragnorok', 
+        name: 'GodOf War Ragnorok', 
         genre: 'Adventure/open world', 
         releaseDate: '2022'
       },
@@ -524,7 +524,8 @@ cursor: pointer;
       }
       // Add more image objects as needed
     ];
-  
+    let gamelist = <%- JSON.stringify(gamelist) %>;
+    //console.log(gamelist);
   
       let currentImageIndex = 0;
   
@@ -552,11 +553,12 @@ cursor: pointer;
         mainImage.classList.add('swipe-left');
         imageOverlay.classList.add('swipe-left');
         currentImageIndex++;
-        if (currentImageIndex >= images.length) {
+        if (currentImageIndex >= gamelist.length) {
           currentImageIndex = 0;
         }
         setTimeout(() => {
-          mainImage.src = images[currentImageIndex].src;
+          //mainImage.src = images[currentImageIndex].src;
+          mainImage.src = gamelist[currentImageIndex].imgurl;
           updateImageOverlay();
           mainImage.classList.remove('swipe-left');
           imageOverlay.classList.remove('swipe-left');
@@ -568,10 +570,11 @@ cursor: pointer;
         imageOverlay.classList.add('swipe-right');
         currentImageIndex--;
         if (currentImageIndex < 0) {
-          currentImageIndex = images.length - 1;
+          currentImageIndex = gamelist.length - 1;
         }
         setTimeout(() => {
-          mainImage.src = images[currentImageIndex].src;
+          //mainImage.src = images[currentImageIndex].src;
+          mainImage.src = gamelist[currentImageIndex].imgurl;
           updateImageOverlay();
           mainImage.classList.remove('swipe-right');
           imageOverlay.classList.remove('swipe-right');
@@ -579,12 +582,12 @@ cursor: pointer;
       }
   
       function updateImageOverlay() {
-        const { name, genre, releaseDate } = images[currentImageIndex];
-        imageOverlay.innerHTML = `
-          <h3>${name}</h3>
-          <p>Genre: ${genre}</p>
-          <p>Release Date: ${releaseDate}</p>
-        `;
+        //const { name, genre, releaseDate } = images[currentImageIndex];
+        imageOverlay.innerHTML = 
+          `<h3>${gamelist[currentImageIndex].game_name}</h3>
+          <p>Genre: ${gamelist[currentImageIndex].genre}</p>
+          <p>Release Date: ${gamelist[currentImageIndex].metascore}</p>`
+;
       }
   
       imageContainer.addEventListener('touchstart', handleTouchStart, false);
@@ -595,22 +598,6 @@ cursor: pointer;
         var popup = document.getElementById('popup');
         popup.classList.toggle('show');
       }
-
-
-  // function fetchGameData() {
-  //   fetch('/games')
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       images = data;
-  //       mainImage.src = images[currentImageIndex].src;
-  //       updateImageOverlay();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Failed to fetch game data:', error);
-  //     });
-  // }
-
-  // fetchGameData();
     </script>
   
   </body>
