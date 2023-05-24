@@ -160,7 +160,7 @@ app.get("/logout", (req, res) => {
 });
 
 
-app.post("/saveProfile", sessionAuth, async (req, res) => {
+app.get("/saveProfile", sessionAuth, async (req, res) => {
   var newPassword = req.body.password;
   if (newPassword) {
     var encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
