@@ -62,6 +62,33 @@ function sessionAuth(req, res, next) {
   }
 }
 
+async function knnpredict(k, input){
+  const result = await gameCollectionBin.find({}).project({game_name: 1,genre:1,ratings:1, _id: 0}).toArray();
+  const inputgame = await gameCollectionBin.findOne({game_name: input});
+  if (inputgame == null) {
+    console.log("game not found");
+    return null;
+  }
+  let distances = [];
+  for (let i = 0; i < result.length; i++) {
+    if (result[i].game_name != input) {
+      distances.push([result[i].game_name, distance(inputgame.genre, result[i].genre) + distance(inputgame.ratings, result[i].ratings)]);
+      //console.log(result[i].genre);
+    }
+  }
+  distances.sort(function(a, b) {
+    return a[1]-b[1];
+  }
+  );
+  let neighbors = [];
+  for (let i = 0; i < k; i++) {
+    neighbors.unshift(distances[i][0]);
+  }
+  console.log(neighbors);
+  return neighbors;
+
+}
+
 app.get("/", (req, res) => {
   res.render("index", {
     username: req.session.username,
@@ -256,20 +283,12 @@ app.get("/dbfixing", async (req, res) => {
   const genrelist = await gameCollection.distinct("normalized_genre");
   console.log(result);
   for (let i = 0; i < result.length; i++) {
-    let genrebinary = [];
-    let gamegenre = result[i].normalized_genre;
-    console.log(gamegenre);
-    if (gamegenre != undefined) {
-    for (let j = 0; j < genrelist.length; j++) {
-      if (gamegenre.includes(genrelist[j])) {
-        //console.log(genrelist[j]);
-        genrebinary.push(1);
-      } else {
-        genrebinary.push(0);
-      }
-    }
-  }
-    await gameCollectionBin.insertOne({game_name: result[i].game_name, genre: genrebinary, meta_score: result[i].meta_score, user_score: result[i].user_score});
+    let ratingbin = [];
+    ratingbin.push(result[i].meta_score);
+    ratingbin.push(result[i].user_score);
+    await gameCollectionBin.updateOne({game_name: result[i].game_name}, {$set: {ratings: ratingbin}});
+    console.log(result[i].game_name);
+    console.log(ratingbin);
     console.log(i);
   }
 
@@ -278,29 +297,7 @@ app.get("/dbfixing", async (req, res) => {
 });
 
 app.get("/aidemo", async (req, res) => {
-  const result = await gameCollectionBin.find({}).project({game_name: 1,genre:1, _id: 0}).toArray();
-  const resquery = "The Witcher 3: Wild Hunt";
-  const resgame = await gameCollectionBin.findOne({game_name: resquery});
-  const resgame2 = await gameCollection.findOne({game_name: "The Witcher 3: Wild Hunt"});
-  console.log(resgame2.genre);
-  let distances = [];
-  for (let i = 0; i < result.length; i++) {
-    if (result[i].game_name != resquery) {
-      distances.push([result[i].game_name, distance(resgame.genre, result[i].genre)]);
-      //console.log(result[i].genre);
-    }
-  }
-  distances.sort(function(a, b) {
-    return a[1] - b[1];
-  });
-  let neighbors = [];
-  for (let i = 0; i < 50; i++) {
-    neighbors.push(distances[i]);
-    console.log(distances[i][0]);
-    const resultquery = await gameCollection.findOne({game_name: neighbors[i][0]});
-    console.log(resultquery.game_name);
-    console.log(resultquery.normalized_genre);
-  }
+  console.log(knnpredict(50, "The Witcher 3: Wild Hunt"));
   
   res.send("done");
 });
