@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Create Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         background-color: #1a1a1a;
+        font-family: "Ubuntu", sans-serif;
       }
       label {
         color: #ffffff;
@@ -126,16 +133,12 @@
           />
         </div>
         <label for="floatingInput">Primary gaming platform</label>
-        <select
-          id="primary-platform"
-          name="primaryGamingPlatform"
-          class="form-select mb-3"
-        >
-          <option value="PC">PC</option>
-          <option value="Xbox">Xbox</option>
-          <option value="PlayStation">PlayStation</option>
-          <option value="Switch">Nintendo Switch</option>
-          <option value="Mobile">Mobile</option>
+        <select id="primary-platform" name="primaryGamingPlatform" class="form-select mb-3">
+          <option value="PC" <%= primaryGamingPlatform === 'PC' ? 'selected' : '' %>>PC</option>
+          <option value="Xbox" <%= primaryGamingPlatform === 'Xbox' ? 'selected' : '' %>>Xbox</option>
+          <option value="PlayStation" <%= primaryGamingPlatform === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
+          <option value="Switch" <%= primaryGamingPlatform === 'Switch' ? 'selected' : '' %>>Nintendo Switch</option>
+          <option value="Mobile" <%= primaryGamingPlatform === 'Mobile' ? 'selected' : '' %>>Mobile</option>
         </select>
         <label for="floatingPassword">Enter a new password</label>
         <div class="form-floating mb-3">
