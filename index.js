@@ -251,35 +251,6 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
   });
 });
 
-// function updateGameOptions() {
-//   const input = document.getElementById("gameInput");
-//   const options = document.getElementById("gameOptions");
-//   const gameName = input.value;
-
-//   // Clear existing options
-//   options.innerHTML = "";
-
-//   // Get matching games from database
-//   gameCollection.find({ game_name: gameName })
-//     .toArray()
-//     .then((data) => {
-//       // Add matching games as options
-//       data.forEach((game) => {
-//         const option = document.createElement("option");
-//         option.value = game.game_name;
-//         option.text = game.game_name;
-//         options.add(option);
-//       });
-
-//       // Show dropdown if there are matching games
-//       if (data.length > 0) {
-//         options.style.display = "block";
-//       } else {
-//         options.style.display = "none";
-//       }
-//     });
-// }
-
 app.get("/createProfile", sessionAuth, (req, res) => {
   res.render("createProfile", {
     username: req.session.username,
