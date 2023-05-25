@@ -570,7 +570,7 @@ cursor: pointer;
       function swipeLeft() {
         mainImage.classList.add('swipe-left');
         imageOverlay.classList.add('swipe-left');
-        currentImageIndex++;
+        currentImageIndex--;
         if (currentImageIndex >= gamelist.length) {
           currentImageIndex = 0;
         }
@@ -581,6 +581,7 @@ cursor: pointer;
           mainImage.classList.remove('swipe-left');
           imageOverlay.classList.remove('swipe-left');
         }, 300);
+       
       }
   
       function swipeRight() {
@@ -597,6 +598,8 @@ cursor: pointer;
           mainImage.classList.remove('swipe-right');
           imageOverlay.classList.remove('swipe-right');
         }, 300);
+
+        // add to the wishlist array
       }
   
       function updateImageOverlay() {
