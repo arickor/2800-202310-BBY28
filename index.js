@@ -89,10 +89,11 @@ async function knnpredict(k, input){
 
 }
 
-app.get("/", async (req, res) => {
+app.get("/", sessionAuth, async (req, res) => {
   console.log("homepage");
   let gamelist = [];
-  gamelist = await knnpredict(50, "Overwatch");
+  const user = await userCollection.findOne({username: req.session.username});
+  gamelist = await knnpredict(50, user.game);
   //await new Promise(resolve => setTimeout(resolve, 8000));
   //console.log(gamelist);
   let gamelist2 = [];
@@ -121,7 +122,7 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get("/wishlist", (req, res) => {
+app.get("/wishlist",sessionAuth, (req, res) => {
   res.render("wishlist");
 });
 
@@ -206,7 +207,7 @@ app.post("/signingup", async (req, res) => {
       req.session.email = email;
       req.session.username = username;
       req.session.cookie.maxAge = expireTime;
-      res.redirect("/");
+      res.redirect("/createProfile");
     }
   }
 });
@@ -230,25 +231,33 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
   );
   req.session.primaryGamingPlatform = req.body.primaryGamingPlatform;
-
-  await userCollection.updateOne(
-    { username: req.session.username },
-    { $set: { game: req.body.game } }
-  );
+  // await userCollection.updateOne(
+  //   { username: req.session.username },
+  //   { $set: { game: req.body.game } }
+  // );
   req.session.game = req.body.game;
 
   const gameName = req.body.game;
   const gameExists = await gameCollection.findOne({ game_name: gameName }); // Updated field name
   if (gameExists) {
     req.session.game = gameName;
+    await userCollection.updateOne(
+      { username: req.session.username },
+      { $set: { game: gameName } }
+    );
+    res.render("saveProfile", {
+      username: req.session.username,
+      email: req.session.email,
+      primaryGamingPlatform: req.session.primaryGamingPlatform,
+      game: req.session.game,
+    });
+  } else {
+    console.log("game not found");
+    //alert("game not found");
+    res.redirect("/createProfile");
   }
 
-  res.render("saveProfile", {
-    username: req.session.username,
-    email: req.session.email,
-    primaryGamingPlatform: req.session.primaryGamingPlatform,
-    game: req.session.game,
-  });
+  
 });
 
 app.get("/createProfile", sessionAuth, (req, res) => {
