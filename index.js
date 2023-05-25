@@ -92,7 +92,7 @@ async function knnpredict(k, input){
 app.get("/", async (req, res) => {
   console.log("homepage");
   let gamelist = [];
-  gamelist = await knnpredict(50, "The Witcher 3: Wild Hunt");
+  gamelist = await knnpredict(50, "Overwatch");
   //await new Promise(resolve => setTimeout(resolve, 8000));
   //console.log(gamelist);
   let gamelist2 = [];
