@@ -38,7 +38,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(star.png);
+  background-image: url(/star.png);
   background-size: 290px;
   background-position: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -57,7 +57,7 @@ body {
   width: 250px;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/user.png);
+  background-image: url(/public/user.png);
   background-size: 250px;
   background-position: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -66,21 +66,35 @@ body {
 /* Ow image  */
 .img {
   grid-area: img;
+  
 }
 .img img {
   border-radius: 4%;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  width: 96%;
+  height: auto;
 }
 
-/* .img { grid-area: img; 
-        background-image: url(/homePage/public/ow2.jpg);
-        width: 96%;
-        height: 130%;
-        background-size: auto;
-    ;
-        color: white;} */
+/* 3650 0604 */
 
-/* x button */
+.swipe-left {
+  transform: translateX(-100%);
+}
+
+.swipe-right {
+  transform: translateX(100%);
+}
+
+.img-overlay {
+  position:relative;
+  
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  color: #fff;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 30px;
+}
 .xBTN {
   grid-area: xBTN;
   display: block;
@@ -94,7 +108,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/xbtn2.png);
+  background-image: url(/public/xbtn2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -119,7 +133,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/filter2.png);
+  background-image: url(/public/filter2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -143,7 +157,7 @@ body {
   border: #1a1a1a;
 
   background-color: #1a1a1a;
-  background-image: url(/homePage/public/check2.png);
+  background-image: url(/public/check2.png);
   background-size: 330px;
   background-position: center;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
