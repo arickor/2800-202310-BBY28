@@ -75,9 +75,7 @@ body {
 /* Ow image  */
 .img {
   grid-area: img;
-  
 
-  
 }
 
 .img img {
@@ -431,13 +429,13 @@ cursor: pointer;
       </div> -->
   
       <div class="img" id="imageContainer">
-        <img src="/ow2.jpg" alt="Overwatch 2" id="mainImage" />
+        <img src="/img1.png" id="mainImage" />
         
 
         <div class="img-overlay" id="imageOverlay">
-          <h3>Overwatch 2</h3>
+          <!-- <h3>Overwatch 2</h3>
           <p>Genre: FPS/Action/Team</p>
-          <p>Release Date: 2022</p>
+          <p>Release Date: 2022</p> -->
         </div>
       </div>
   
@@ -446,7 +444,7 @@ cursor: pointer;
         <button type="button" onclick="swipeLeft()"></button>
       </div>
       <div class="Filter">
-        <button type="button" onclick="togglePopup()"></button>
+        <button type="button" id="popupButton" onclick="togglePopup()"></button>
       </div>
       <div class="Check">
         <button type="button" onclick="swipeRight()"></button>
@@ -458,7 +456,7 @@ cursor: pointer;
        <div class="gap"></div>
   
               <div class="x">
-                <img  class="close-button" onclick="togglePopup()" src="/xbtn2.png" ></img>
+                <img  class="close-button" id="popupButton" onclick="togglePopup()" src="/xbtn2.png" ></img>
               </div>
   
               <div class="rDate">
@@ -507,7 +505,7 @@ cursor: pointer;
               </div>
   
               <div class="save">
-                <button class="btn2" type="button">Save</button>
+                <button class="btn2" type="button" onclick=swipel>Save</button>
               </div>
       </div>
   
@@ -546,6 +544,8 @@ cursor: pointer;
     //console.log(gamelist);
   
       let currentImageIndex = 0;
+
+      let i = currentImageIndex
   
       function handleTouchStart(event) {
         startX = event.touches[0].clientX;
@@ -570,7 +570,7 @@ cursor: pointer;
       function swipeLeft() {
         mainImage.classList.add('swipe-left');
         imageOverlay.classList.add('swipe-left');
-        currentImageIndex--;
+        currentImageIndex++;
         if (currentImageIndex >= gamelist.length) {
           currentImageIndex = 0;
         }
@@ -585,29 +585,42 @@ cursor: pointer;
       }
   
       function swipeRight() {
-        mainImage.classList.add('swipe-right');
-        imageOverlay.classList.add('swipe-right');
-        currentImageIndex--;
-        if (currentImageIndex < 0) {
-          currentImageIndex = gamelist.length - 1;
-        }
-        setTimeout(() => {
-          //mainImage.src = images[currentImageIndex].src;
-          mainImage.src = gamelist[currentImageIndex].imgurl;
-          updateImageOverlay();
-          mainImage.classList.remove('swipe-right');
-          imageOverlay.classList.remove('swipe-right');
-        }, 300);
+  mainImage.classList.add('swipe-right');
+  imageOverlay.classList.add('swipe-right');
+  currentImageIndex++;
+  current = currentImageIndex;
+  if (currentImageIndex < 0) {
+    currentImageIndex = gamelist.length - 1;
+  }
+  setTimeout(() => {
+    //mainImage.src = images[currentImageIndex].src;
+    mainImage.src = gamelist[currentImageIndex].imgurl;
+    updateImageOverlay();
+    mainImage.classList.remove('swipe-right');
+    imageOverlay.classList.remove('swipe-right');
+      addToWishlist();
+  }, 300);
+}
 
-        // add to the wishlist array
-      }
+let wishlist=[];
+
+function addToWishlist() {
+  const swipedGame = gamelist[currentImageIndex -1];
+  wishlist.push(swipedGame);
+  // Perform the necessary steps to push the `wishlist` array to the database
+  // For example, you might use an API call or database query here
+  // to update the wishlist in the database
+  console.log('Game added to wishlist:', swipedGame);
+  console.log('Updated Wishlist:', wishlist);
+}
+console.log(wishlist);
   
       function updateImageOverlay() {
         //const { name, genre, releaseDate } = images[currentImageIndex];
         imageOverlay.innerHTML = 
           `<h3>${gamelist[currentImageIndex].game_name}</h3>
           <p>Genre: ${gamelist[currentImageIndex].genre}</p>
-          <p>Release Date: ${gamelist[currentImageIndex].metascore}</p>`
+          <p>Platform: ${gamelist[currentImageIndex].platform}</p>`
 ;
       }
   
@@ -619,6 +632,7 @@ cursor: pointer;
         var popup = document.getElementById('popup');
         popup.classList.toggle('show');
       }
+
     </script>
   
   </body>
