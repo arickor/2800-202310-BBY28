@@ -1,3 +1,4 @@
 /node_modules
 package-lock.json
 .env
+games_of_all_time.csv
