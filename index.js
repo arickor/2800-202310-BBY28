@@ -8,7 +8,7 @@ const url = require("url");
 
 const app = express();
 
-const path = require('path');
+const path = require("path");
 
 const Joi = require("joi");
 const { database } = require("./dbconnection");
@@ -27,6 +27,7 @@ const port = process.env.PORT || 8000;
 const node_session_secret = process.env.NODE_SESSION_SECRET; // put your secret here
 
 const userCollection = database.db(mongodb_database).collection("users");
+const gameCollection = database.db(mongodb_database).collection("games");
 
 const expireTime = 60 * 60 * 1000; // 1 hour in milliseconds
 const saltRounds = 10;
@@ -64,16 +65,16 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get('/wishlist', (req, res) => {
-  res.render('wishlist');
+app.get("/wishlist", (req, res) => {
+  res.render("wishlist");
 });
 
-app.get('/homepage', (req, res) => {
-  res.render('homepage');
+app.get("/homepage", (req, res) => {
+  res.render("homepage");
 });
 
-app.get('/login', (req, res) => {
-  res.render('login');
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 app.post("/loggingin", async (req, res) => {
@@ -110,8 +111,8 @@ app.post("/loggingin", async (req, res) => {
   }
 });
 
-app.get('/signup', (req, res) => {
-  res.render('signup');
+app.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
 app.post("/signingup", async (req, res) => {
@@ -159,33 +160,78 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-
 app.post("/saveProfile", sessionAuth, async (req, res) => {
   var newPassword = req.body.password;
   if (newPassword) {
     var encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
-    await userCollection.updateOne({username: req.session.username}, {$set: {password: encryptedPassword}});
+    await userCollection.updateOne(
+      { username: req.session.username },
+      { $set: { password: encryptedPassword } }
+    );
   }
   await userCollection.updateOne(
     { username: req.session.username },
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
   );
   req.session.primaryGamingPlatform = req.body.primaryGamingPlatform;
+
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $set: { game: req.body.game } }
+  );
+  req.session.game = req.body.game;
+
+  const gameName = req.body.game;
+  const gameExists = await gameCollection.findOne({ game_name: gameName }); // Updated field name
+  if (gameExists) {
+    req.session.game = gameName;
+  }
+
   res.render("saveProfile", {
     username: req.session.username,
     email: req.session.email,
-    primaryGamingPlatform: req.session.primaryGamingPlatform
+    primaryGamingPlatform: req.session.primaryGamingPlatform,
+    game: req.session.game,
   });
 });
+
+// function updateGameOptions() {
+//   const input = document.getElementById("gameInput");
+//   const options = document.getElementById("gameOptions");
+//   const gameName = input.value;
+
+//   // Clear existing options
+//   options.innerHTML = "";
+
+//   // Get matching games from database
+//   gameCollection.find({ game_name: gameName })
+//     .toArray()
+//     .then((data) => {
+//       // Add matching games as options
+//       data.forEach((game) => {
+//         const option = document.createElement("option");
+//         option.value = game.game_name;
+//         option.text = game.game_name;
+//         options.add(option);
+//       });
+
+//       // Show dropdown if there are matching games
+//       if (data.length > 0) {
+//         options.style.display = "block";
+//       } else {
+//         options.style.display = "none";
+//       }
+//     });
+// }
 
 app.get("/createProfile", sessionAuth, (req, res) => {
   res.render("createProfile", {
     username: req.session.username,
     email: req.session.email,
-    primaryGamingPlatform: req.session.primaryGamingPlatform
+    primaryGamingPlatform: req.session.primaryGamingPlatform,
+    game: req.session.game,
   });
 });
-
 
 app.use(express.static(__dirname + "/public"));
 
