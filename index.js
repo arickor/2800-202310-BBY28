@@ -92,7 +92,7 @@ async function knnpredict(k, input){
 app.get("/", async (req, res) => {
   console.log("homepage");
   let gamelist = [];
-  gamelist = await knnpredict(50, "The Witcher 3: Wild Hunt");
+  gamelist = await knnpredict(50, "Overwatch");
   //await new Promise(resolve => setTimeout(resolve, 8000));
   //console.log(gamelist);
   let gamelist2 = [];
@@ -121,16 +121,16 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get('/wishlist', (req, res) => {
-  res.render('wishlist');
+app.get("/wishlist", (req, res) => {
+  res.render("wishlist");
 });
 
-app.get('/homepage', (req, res) => {
-  res.render('homepage');
+app.get("/homepage", (req, res) => {
+  res.render("homepage");
 });
 
-app.get('/login', (req, res) => {
-  res.render('login');
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 app.post("/loggingin", async (req, res) => {
@@ -167,8 +167,8 @@ app.post("/loggingin", async (req, res) => {
   }
 });
 
-app.get('/signup', (req, res) => {
-  res.render('signup');
+app.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
 app.post("/signingup", async (req, res) => {
@@ -216,22 +216,38 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-
-app.get("/saveProfile", sessionAuth, async (req, res) => {
+app.post("/saveProfile", sessionAuth, async (req, res) => {
   var newPassword = req.body.password;
   if (newPassword) {
     var encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
-    await userCollection.updateOne({username: req.session.username}, {$set: {password: encryptedPassword}});
+    await userCollection.updateOne(
+      { username: req.session.username },
+      { $set: { password: encryptedPassword } }
+    );
   }
   await userCollection.updateOne(
     { username: req.session.username },
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
   );
   req.session.primaryGamingPlatform = req.body.primaryGamingPlatform;
+
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $set: { game: req.body.game } }
+  );
+  req.session.game = req.body.game;
+
+  const gameName = req.body.game;
+  const gameExists = await gameCollection.findOne({ game_name: gameName }); // Updated field name
+  if (gameExists) {
+    req.session.game = gameName;
+  }
+
   res.render("saveProfile", {
     username: req.session.username,
     email: req.session.email,
-    primaryGamingPlatform: req.session.primaryGamingPlatform
+    primaryGamingPlatform: req.session.primaryGamingPlatform,
+    game: req.session.game,
   });
 });
 
@@ -239,7 +255,8 @@ app.get("/createProfile", sessionAuth, (req, res) => {
   res.render("createProfile", {
     username: req.session.username,
     email: req.session.email,
-    primaryGamingPlatform: req.session.primaryGamingPlatform
+    primaryGamingPlatform: req.session.primaryGamingPlatform,
+    game: req.session.game,
   });
 });
 

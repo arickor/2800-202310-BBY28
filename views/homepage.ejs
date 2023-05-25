@@ -75,8 +75,9 @@ body {
 /* Ow image  */
 .img {
   grid-area: img;
-  
+
 }
+
 .img img {
   border-radius: 4%;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -85,7 +86,6 @@ body {
   height: auto;
 }
 
-/* 3650 0604 */
 
 .swipe-left {
   transform: translateX(-100%);
@@ -96,14 +96,29 @@ body {
 }
 
 .img-overlay {
-  position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      color: #fff;
+  display:flexbox;
+
+  height:485px;
+  position:absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  padding: 10px;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  transform: translate(47px, 100%);
+
+      font-size: 55px;
+      width: 120%;
+   
+      /* padding-right: 185px; */
+      font-family: "Nanum Gothic", sans-serif;
+      border-radius: 15%;
+
 }
+
+
 .xBTN {
   grid-area: xBTN;
   display: block;
@@ -402,7 +417,7 @@ cursor: pointer;
 
 
       <div class="user">
-        <a href="/saveProfile">
+        <a href="/createProfile">
             <button type="button"></button>
           </a>
        
@@ -414,12 +429,13 @@ cursor: pointer;
       </div> -->
   
       <div class="img" id="imageContainer">
-        <img src="/ow2.jpg" alt="Overwatch 2" id="mainImage" />
+        <img src="/img1.png" id="mainImage" />
+        
 
         <div class="img-overlay" id="imageOverlay">
-          <h3>Overwatch 2</h3>
+          <!-- <h3>Overwatch 2</h3>
           <p>Genre: FPS/Action/Team</p>
-          <p>Release Date: 2022</p>
+          <p>Release Date: 2022</p> -->
         </div>
       </div>
   
@@ -428,7 +444,7 @@ cursor: pointer;
         <button type="button" onclick="swipeLeft()"></button>
       </div>
       <div class="Filter">
-        <button type="button" onclick="togglePopup()"></button>
+        <button type="button" id="popupButton" onclick="togglePopup()"></button>
       </div>
       <div class="Check">
         <button type="button" onclick="swipeRight()"></button>
@@ -440,7 +456,7 @@ cursor: pointer;
        <div class="gap"></div>
   
               <div class="x">
-                <img  class="close-button" onclick="togglePopup()" src="/xbtn2.png" ></img>
+                <img  class="close-button" id="popupButton" onclick="togglePopup()" src="/xbtn2.png" ></img>
               </div>
   
               <div class="rDate">
@@ -489,7 +505,7 @@ cursor: pointer;
               </div>
   
               <div class="save">
-                <button class="btn2" type="button">Save</button>
+                <button class="btn2" type="button" onclick=swipel>Save</button>
               </div>
       </div>
   
@@ -528,6 +544,8 @@ cursor: pointer;
     //console.log(gamelist);
   
       let currentImageIndex = 0;
+
+      let i = currentImageIndex
   
       function handleTouchStart(event) {
         startX = event.touches[0].clientX;
@@ -563,30 +581,46 @@ cursor: pointer;
           mainImage.classList.remove('swipe-left');
           imageOverlay.classList.remove('swipe-left');
         }, 300);
+       
       }
   
       function swipeRight() {
-        mainImage.classList.add('swipe-right');
-        imageOverlay.classList.add('swipe-right');
-        currentImageIndex--;
-        if (currentImageIndex < 0) {
-          currentImageIndex = gamelist.length - 1;
-        }
-        setTimeout(() => {
-          //mainImage.src = images[currentImageIndex].src;
-          mainImage.src = gamelist[currentImageIndex].imgurl;
-          updateImageOverlay();
-          mainImage.classList.remove('swipe-right');
-          imageOverlay.classList.remove('swipe-right');
-        }, 300);
-      }
+  mainImage.classList.add('swipe-right');
+  imageOverlay.classList.add('swipe-right');
+  currentImageIndex++;
+  current = currentImageIndex;
+  if (currentImageIndex < 0) {
+    currentImageIndex = gamelist.length - 1;
+  }
+  setTimeout(() => {
+    //mainImage.src = images[currentImageIndex].src;
+    mainImage.src = gamelist[currentImageIndex].imgurl;
+    updateImageOverlay();
+    mainImage.classList.remove('swipe-right');
+    imageOverlay.classList.remove('swipe-right');
+      addToWishlist();
+  }, 300);
+}
+
+let wishlist=[];
+
+function addToWishlist() {
+  const swipedGame = gamelist[currentImageIndex -1];
+  wishlist.push(swipedGame);
+  // Perform the necessary steps to push the `wishlist` array to the database
+  // For example, you might use an API call or database query here
+  // to update the wishlist in the database
+  console.log('Game added to wishlist:', swipedGame);
+  console.log('Updated Wishlist:', wishlist);
+}
+console.log(wishlist);
   
       function updateImageOverlay() {
         //const { name, genre, releaseDate } = images[currentImageIndex];
         imageOverlay.innerHTML = 
           `<h3>${gamelist[currentImageIndex].game_name}</h3>
           <p>Genre: ${gamelist[currentImageIndex].genre}</p>
-          <p>Release Date: ${gamelist[currentImageIndex].metascore}</p>`
+          <p>Platform: ${gamelist[currentImageIndex].platform}</p>`
 ;
       }
   
@@ -598,6 +632,7 @@ cursor: pointer;
         var popup = document.getElementById('popup');
         popup.classList.toggle('show');
       }
+
     </script>
   
   </body>
