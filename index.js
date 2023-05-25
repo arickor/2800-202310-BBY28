@@ -84,15 +84,40 @@ async function knnpredict(k, input){
   for (let i = 0; i < k; i++) {
     neighbors.unshift(distances[i][0]);
   }
-  console.log(neighbors);
+  //console.log(neighbors);
   return neighbors;
 
 }
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  console.log("homepage");
+  let gamelist = [];
+  gamelist = await knnpredict(50, "The Witcher 3: Wild Hunt");
+  //await new Promise(resolve => setTimeout(resolve, 8000));
+  //console.log(gamelist);
+  let gamelist2 = [];
+  for (let i = 0; i < gamelist.length; i++) {
+    //console.log(gamelist[i]);
+    let result = await gameCollection.findOne({game_name: gamelist[i]});
+    let gamejson = {
+      game_name: result.game_name,
+      imgurl: result.imgurl,
+      meta_score: result.meta_score,
+      user_score: result.user_score,
+      platform: result.platform,
+      // description: result.description,
+      genre: result.genre,
+    };
+    gamelist2.push(gamejson);
+    //console.log(result);
+    //gamelist2.push(gameCollection.findOne({game_name: gamelist[i]}));
+  }
+  //console.log(gamelist2);
+  console.log("done");
   res.render("homepage", {
     username: req.session.username,
     email: req.session.email,
+    gamelist: gamelist2
   });
 });
 
