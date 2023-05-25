@@ -76,7 +76,10 @@ body {
 .img {
   grid-area: img;
   
+
+  
 }
+
 .img img {
   border-radius: 4%;
   box-shadow: 0 20px 4px rgba(0, 0, 0, 0.2);
@@ -85,7 +88,6 @@ body {
   height: auto;
 }
 
-/* 3650 0604 */
 
 .swipe-left {
   transform: translateX(-100%);
@@ -96,14 +98,29 @@ body {
 }
 
 .img-overlay {
-  position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      color: #fff;
+  display:flexbox;
+
+  height:485px;
+  position:absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  padding: 10px;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  transform: translate(47px, 100%);
+
+      font-size: 55px;
+      width: 120%;
+   
+      /* padding-right: 185px; */
+      font-family: "Nanum Gothic", sans-serif;
+      border-radius: 15%;
+
 }
+
+
 .xBTN {
   grid-area: xBTN;
   display: block;
@@ -415,6 +432,7 @@ cursor: pointer;
   
       <div class="img" id="imageContainer">
         <img src="/ow2.jpg" alt="Overwatch 2" id="mainImage" />
+        
 
         <div class="img-overlay" id="imageOverlay">
           <h3>Overwatch 2</h3>
