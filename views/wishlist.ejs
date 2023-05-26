@@ -28,6 +28,7 @@
         color: #9F9D9D;
         /* align-items: center; */
         text-align: center;
+        margin-top: 7%;
       }
 
       .profile-button {
@@ -35,11 +36,13 @@
         background-color: transparent;
         padding: 0;
         cursor: pointer;
+        margin-right: -6%;
+        margin-top: 2%;
       }
 
       .profile-button img {
-        width: 50px;
-        height: 50px; 
+        width: 68px;
+        height: 68px; 
       }
 
       .home-button {
@@ -47,11 +50,13 @@
         background-color: transparent;
         padding: 0;
         cursor: pointer;
+        margin-left: -4%;
+        margin-top: 2%;
       }
 
       .home-button img {
-        width: 40px;
-        height: 40px; 
+        width: 55px;
+        height: 55px; 
       }
 
       .wishlist-card {
@@ -94,41 +99,19 @@
             <h1 class="wishlist-title">Wishlist</h1>
             <button class="profile-button" onclick="goProfile()"><img src="profile.jpg" alt="Profile"></button>
           </div>          
-      <div class="wishlist-card">
-        <img src="game1.jpg" alt="Game 1">
-        <div class="wishlist-card-content">
-          <h4>Overwatch 2</h4>
-          <p>Platform: PC</p>
-          <p>Release Date: November 2022</p>
-          <p>Genre: First-Person Shooter</p>
-        </div>
-      </div>
-      <div class="wishlist-card">
-        <img src="game2.jpg" alt="Game 2">
-        <div class="wishlist-card-content">
-          <h4>Minecraft</h4>
-          <p>Platform: Xbox One</p>
-          <p>Release Date: May 2009</p>
-          <p>Genre: Sandbox, Survival</p>
-        </div>
-      </div>
-      <div class="wishlist-card">
-        <img src="game3.jpg" alt="Game 3">
-        <div class="wishlist-card-content">
-          <h4>GTA V</h4>
-          <p>Platform: PlayStation 4</p>
-          <p>Release Date: September 2013</p>
-          <p>Genre: Action-Adventure</p>
-        </div>
-      </div>
+      <% let i=0; %>
+      <% for(i=0; i < gamelist.length; i++) { %>
+          <%- include('templates/wishlistcard', {game: gamelist[i]})  %> 
+      <% } %> 
     </div>
     <script>
         function goProfile() {
           window.location.href = "/createProfile";
         }
         function goHome() {
-          window.location.href = "/homepage";
+          window.location.href = "/";
         }
+        console.log()
         </script>
     <script src="../index.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

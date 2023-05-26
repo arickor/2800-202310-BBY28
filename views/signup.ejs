@@ -12,7 +12,7 @@
       .container {
         max-width: 360px;
         margin: 0 auto;
-        padding-top: 100px;
+        padding-top: 57px;
       }
 
       .signup-block {
@@ -71,10 +71,23 @@
         color: #007bff;
         text-decoration: none;
       }
+
+      .logo-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .logo-image {
+      width: 90px;
+      
+    }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="logo-container">
+          <img src="controller.png" alt="Logo" class="logo-image">
+      </div>
       <div class="signup-block">
         <h1>Sign Up</h1>
         <form method="POST" action="/signingup">
@@ -104,3 +117,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </body>
 </html>
+
+<%- include("templates/footer") %>
