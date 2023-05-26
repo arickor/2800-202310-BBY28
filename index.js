@@ -231,10 +231,6 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
     { $set: { primaryGamingPlatform: req.body.primaryGamingPlatform } }
   );
   req.session.primaryGamingPlatform = req.body.primaryGamingPlatform;
-  // await userCollection.updateOne(
-  //   { username: req.session.username },
-  //   { $set: { game: req.body.game } }
-  // );
   req.session.game = req.body.game;
 
   const gameName = req.body.game;
@@ -253,11 +249,12 @@ app.post("/saveProfile", sessionAuth, async (req, res) => {
     });
   } else {
     console.log("game not found");
-    //alert("game not found");
-    res.redirect("/createProfile");
+    res.redirect("/noGameFound");
   }
+});
 
-  
+app.get("/noGameFound", (req, res) => {
+  res.render("noGameFound");
 });
 
 app.get("/createProfile", sessionAuth, (req, res) => {
