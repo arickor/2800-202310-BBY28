@@ -129,14 +129,8 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get('/wishlist', (req, res) => {
-  // Retrieve the wishlist array from your database or any other data source
-  const wishlist = []; // Replace with your actual wishlist array
-
-  console.log(wishlist); // Check the retrieved wishlist array in the server console
-
-  // Render the wishlist.ejs template and pass the wishlist array as a variable
-  res.render('wishlist', { wishlist });
+app.get("/wishlist",sessionAuth, (req, res) => {
+  res.render("wishlist");
 });
 
 
