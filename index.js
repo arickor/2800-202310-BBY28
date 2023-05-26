@@ -4,6 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const MongoStore = require("connect-mongo");
+
 require("dotenv").config();
 const url = require("url");
 const Papa = require("papaparse");
@@ -15,6 +16,8 @@ const path = require('path');
 const apicalypse = require("apicalypse").default;
 const Joi = require("joi");
 const { database } = require("./dbconnection");
+app.locals.database = database;
+app.locals.mongoStore = MongoStore;
 
 app.set("view engine", "ejs");
 
@@ -118,12 +121,51 @@ app.get("/", sessionAuth, async (req, res) => {
   res.render("homepage", {
     username: req.session.username,
     email: req.session.email,
-    gamelist: gamelist2
+    gamelist: gamelist2,
+    database: database,
   });
 });
 
-app.get("/wishlist",sessionAuth, (req, res) => {
-  res.render("wishlist");
+app.post("/wishlist1",sessionAuth, async (req, res) => {
+  const result = await userCollection.findOne({username: req.session.username});
+  let gamelist;
+  if (req.body.gamewishlist == "") {
+    if (result.wishlist == undefined) {
+      gamelist = [];
+    } else {
+      gamelist = result.wishlist;
+    }
+  } else {
+    gamelist = JSON.parse(req.body.gamewishlist);
+    if (result.wishlist == undefined) {
+      await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: JSON.parse(req.body.gamewishlist)}});
+    } else {
+      resultgamelist = result.wishlist;
+      for (let i = 0; i < gamelist.length; i++) {
+        if (!resultgamelist.includes(gamelist[i])) {
+          resultgamelist.push(gamelist[i]);
+        }
+      }
+      gamelist = resultgamelist;
+    }
+  }
+  console.log(req.body.gamewishlist);
+  //console.log(JSON.parse(req.body.gamewishlist));
+  await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: gamelist}});
+  console.log(gamelist);
+  console.log("work");
+  res.redirect("wishlist");
+});
+app.get("/wishlist", sessionAuth, async (req, res) => {
+  const result = await userCollection.findOne({username: req.session.username});
+  let gamelist;
+  if (result.wishlist == undefined) {
+    gamelist = [];
+  } else {
+    gamelist = result.wishlist;
+  }
+  console.log(gamelist);
+  res.render("wishlist", {gamelist: gamelist});
 });
 
 app.get("/homepage", (req, res) => {
