@@ -410,9 +410,14 @@ cursor: pointer;
   <body>
     <div class="container">
       <div class="str">
-        <a href="/wishlist">
+        <form action="/wishlist" method="POST">
+          <input type="hidden" id="gameWishList1" name="gamewishlist">
+            <button type="submit"></button>
+
+        </form>
+        <!-- <a href="/wishlist">
           <button type="button"></button>
-        </a>
+        </a> -->
       </div>
 
 
@@ -515,10 +520,9 @@ cursor: pointer;
       const imageContainer = document.getElementById('imageContainer');
       const mainImage = document.getElementById('mainImage');
       const imageOverlay = document.getElementById('imageOverlay');
-  
       let startX = 0;
       let distX = 0;
-  
+      let test1 = "test";
       let images = [
       { 
         src: '/ow2.jpg', 
@@ -542,7 +546,7 @@ cursor: pointer;
     ];
     let gamelist = <%- JSON.stringify(gamelist) %>;
     //console.log(gamelist);
-  
+    
       let currentImageIndex = 0;
 
       let i = currentImageIndex
@@ -612,8 +616,11 @@ function addToWishlist() {
   // to update the wishlist in the database
   console.log('Game added to wishlist:', swipedGame);
   console.log('Updated Wishlist:', wishlist);
+  document.getElementById("gameWishList1").value = JSON.stringify(wishlist);
+  console.log(document.getElementById("gameWishList1").value);
 }
 console.log(wishlist);
+
   
       function updateImageOverlay() {
         //const { name, genre, releaseDate } = images[currentImageIndex];

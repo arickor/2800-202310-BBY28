@@ -4,6 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const MongoStore = require("connect-mongo");
+
 require("dotenv").config();
 const url = require("url");
 const Papa = require("papaparse");
@@ -15,6 +16,8 @@ const path = require('path');
 const apicalypse = require("apicalypse").default;
 const Joi = require("joi");
 const { database } = require("./dbconnection");
+app.locals.database = database;
+app.locals.mongoStore = MongoStore;
 
 app.set("view engine", "ejs");
 
@@ -118,11 +121,16 @@ app.get("/", sessionAuth, async (req, res) => {
   res.render("homepage", {
     username: req.session.username,
     email: req.session.email,
-    gamelist: gamelist2
+    gamelist: gamelist2,
+    database: database,
   });
 });
 
-app.get("/wishlist",sessionAuth, (req, res) => {
+app.post("/wishlist",sessionAuth, async (req, res) => {
+  console.log(req.body.gamewishlist);
+  console.log(JSON.parse(req.body.gamewishlist));
+  await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: JSON.parse(req.body.gamewishlist)}});
+  console.log("work");
   res.render("wishlist");
 });
 
