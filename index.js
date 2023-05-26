@@ -8,6 +8,7 @@ require("dotenv").config();
 const url = require("url");
 const Papa = require("papaparse");
 var distance = require( 'compute-cosine-distance' );
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -53,6 +54,13 @@ app.use(
     resave: true,
   })
 );
+
+app.use(cookieParser());
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 function sessionAuth(req, res, next) {
   if (req.session.authenticated) {
@@ -117,13 +125,20 @@ app.get("/", async (req, res) => {
   res.render("homepage", {
     username: req.session.username,
     email: req.session.email,
-    gamelist: gamelist2
+    gamelist: gamelist2,
   });
 });
 
-app.get("/wishlist", (req, res) => {
-  res.render("wishlist");
+app.get('/wishlist', (req, res) => {
+  // Retrieve the wishlist array from your database or any other data source
+  const wishlist = []; // Replace with your actual wishlist array
+
+  console.log(wishlist); // Check the retrieved wishlist array in the server console
+
+  // Render the wishlist.ejs template and pass the wishlist array as a variable
+  res.render('wishlist', { wishlist });
 });
+
 
 app.get("/homepage", (req, res) => {
   res.render("homepage");

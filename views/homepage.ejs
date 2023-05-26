@@ -1,5 +1,4 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html>
   <head>
     <meta charset="utf-8" />
@@ -602,7 +601,7 @@ cursor: pointer;
   }, 300);
 }
 
-let wishlist=[];
+const wishlist = [];
 
 function addToWishlist() {
   const swipedGame = gamelist[currentImageIndex -1];
@@ -614,7 +613,7 @@ function addToWishlist() {
   console.log('Updated Wishlist:', wishlist);
 }
 console.log(wishlist);
-  
+
       function updateImageOverlay() {
         //const { name, genre, releaseDate } = images[currentImageIndex];
         imageOverlay.innerHTML = 
@@ -633,9 +632,8 @@ console.log(wishlist);
         popup.classList.toggle('show');
       }
 
+      
     </script>
   
   </body>
   </html>
-  
-  
