@@ -126,12 +126,46 @@ app.get("/", sessionAuth, async (req, res) => {
   });
 });
 
-app.post("/wishlist",sessionAuth, async (req, res) => {
+app.post("/wishlist1",sessionAuth, async (req, res) => {
+  const result = await userCollection.findOne({username: req.session.username});
+  let gamelist;
+  if (req.body.gamewishlist == "") {
+    if (result.wishlist == undefined) {
+      gamelist = [];
+    } else {
+      gamelist = result.wishlist;
+    }
+  } else {
+    gamelist = JSON.parse(req.body.gamewishlist);
+    if (result.wishlist == undefined) {
+      await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: JSON.parse(req.body.gamewishlist)}});
+    } else {
+      resultgamelist = result.wishlist;
+      for (let i = 0; i < gamelist.length; i++) {
+        if (!resultgamelist.includes(gamelist[i])) {
+          resultgamelist.push(gamelist[i]);
+        }
+      }
+      gamelist = resultgamelist;
+    }
+  }
   console.log(req.body.gamewishlist);
-  console.log(JSON.parse(req.body.gamewishlist));
-  await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: JSON.parse(req.body.gamewishlist)}});
+  //console.log(JSON.parse(req.body.gamewishlist));
+  await userCollection.updateOne({ username: req.session.username }, {$set: {wishlist: gamelist}});
+  console.log(gamelist);
   console.log("work");
-  res.render("wishlist");
+  res.redirect("wishlist");
+});
+app.get("/wishlist", sessionAuth, async (req, res) => {
+  const result = await userCollection.findOne({username: req.session.username});
+  let gamelist;
+  if (result.wishlist == undefined) {
+    gamelist = [];
+  } else {
+    gamelist = result.wishlist;
+  }
+  console.log(gamelist);
+  res.render("wishlist", {gamelist: gamelist});
 });
 
 app.get("/homepage", (req, res) => {
